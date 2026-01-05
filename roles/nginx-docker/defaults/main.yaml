@@ -1,5 +1,0 @@
-PATH: /etc/nginx/sites-available/lemp
-NGINX_VERSION: latest
-NGINX_PORT: 2380
-
-NETWORK: lempnet
