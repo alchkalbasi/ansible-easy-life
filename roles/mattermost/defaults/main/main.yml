@@ -1,0 +1,14 @@
+---
+mattermost_dir: usr/services//mattermost
+
+docker_dir: ${{ mattermost_dir }}/docker
+
+compose_name: compose.yml
+
+# mattermost_volume_dir: /home/alch/mattermost/volumes
+# MATTERMOST_CONFIG_PATH: /home/alch/mattermost/volumes/config
+# MATTERMOST_DATA_PATH: /home/alch/mattermost/volumes/data
+# MATTERMOST_LOGS_PATH: /home/alch/mattermost/volumes/logs
+# MATTERMOST_PLUGINS_PATH: /home/alch/mattermost/volumes/plugins
+# MATTERMOST_CLIENT_PLUGINS_PATH: /home/alch/mattermost/volumes/client-plugins
+# MATTERMOST_BLEVE_INDEXES_PATH: /home/alch/mattermost/volumes/bleve-indexes
