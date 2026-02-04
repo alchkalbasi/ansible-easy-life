@@ -28,7 +28,7 @@ services:
       - "--entrypoints.${TRAEFIK_HTTP_REDIRECT_TO}.address=:443"
       - "--certificatesresolvers.${traefik_certresolver}.acme.tlschallenge=${TRAEFIK_CERT_RESOLVER_LE_ACME_TLSCHALLENGE}"
       - "--certificatesresolvers.${traefik_certresolver}.acme.email=${TRAEFIK_ACME_EMAIL}"
-      - "--certificatesresolvers.${traefik_certresolver}.acme.storage=/certs/acme.json"
+      - "--certificatesresolvers.${traefik_certresolver}.acme.storage=${TRAEFIK_CERT_PATH}"
     ports:
       - "80:80"
       - "443:443"
