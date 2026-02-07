@@ -1,0 +1,12 @@
+[Unit]
+Description=Heplify Capture Agent
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/heplify -i {{ network_interface }} -hs {{ heplify_server_ip }}:{{ heplify_server_port }} -m SIPRTCP
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,73 @@
+services:
+  db:
+    image: mariadb:${MARIADB_IMAGE_TAG}
+    container_name: ${MARIADB_CONTAINER_NAME}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MARIADB_DB}
+      - MYSQL_USER=${MARIADB_USER}
+      - MYSQL_PASSWORD=${MARIADB_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: ${RESTART_POLICY}
+    networks: 
+      - prinet
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "--password=${MARIADB_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  heplify-server:
+    image: sipcapture/heplify-server:${HEPLIFY_IMAGE_TAG}
+    container_name: ${HEPLIFY_CONTAINER_NAME}
+    command:
+      - './heplify-server'
+    ports:
+      - "${PROM_SERVER_IP}:9060:9060/udp"
+      - "${PROM_SERVER_IP}:9060:9060/tcp"
+      - "${PROM_SERVER_IP}:9096:9096"
+    environment:
+      - "HEPLIFYSERVER_DBDRIVER=mysql"
+      - "HEPLIFYSERVER_DBADDR=db:3306"
+      - "HEPLIFYSERVER_DBUSER=${MARIADB_USER}"
+      - "HEPLIFYSERVER_DBPASS=${MARIADB_PASSWORD}"
+      - "HEPLIFYSERVER_DBDATA=${MARIADB_DB}"
+      - "HEPLIFYSERVER_HEPADDR=0.0.0.0:9060"
+      - "HEPLIFYSERVER_PROMADDR=0.0.0.0:9096"
+      - "HEPLIFYSERVER_DBSHEMATEST=true"
+      - "HEPLIFYSERVER_LOGSTD=true"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: ${RESTART_POLICY}
+    networks: 
+      - prinet
+
+#   homer-app:
+#     image: sipcapture/homer-app:${HEPLIFYUI_IMAGE_TAG}
+#     container_name: homer-app
+#     depends_on:
+#       - db
+#       - heplify-server
+#     ports:
+#       - "${PROM_SERVER_IP}:9080:80"
+#     environment:
+#       - "DB_TYPE=mysql"
+#       - "DB_HOST=db"
+#       - "DB_PORT=3306"
+#       - "DB_USER=${MARIADB_USER}"
+#       - "DB_PASS=${MARIADB_PASSWORD}"
+#       - "DB_NAME=${MARIADB_DB}"
+#     restart: ${RESTART_POLICY}
+#     networks: 
+#       - prinet
+
+volumes:
+  mariadb_data:
+
+networks:
+  pubnet:
+    external: true
+  prinet:
+    external: true
