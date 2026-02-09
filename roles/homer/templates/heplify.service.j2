@@ -1,12 +1,15 @@
 [Unit]
-Description=Heplify Capture Agent
+Description=HEPlify Capture Agent
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/heplify -i {{ network_interface }} -hs {{ heplify_server_ip }}:{{ heplify_server_port }} -m SIPRTCP
+ExecStart={{ heplify_agent_execute_path }} -i {{ network_interface }} -t udp -hs {{ heplify_server_ip }}:{{ heplify_server_port }} -m SIPRTCP,SIPDNS
 Restart=on-failure
 RestartSec=10s
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=heplify
 
 [Install]
 WantedBy=multi-user.target
