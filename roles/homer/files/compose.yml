@@ -45,7 +45,7 @@ services:
 
   homer-app:
     image: sipcapture/homer-app:${HEPLIFYUI_IMAGE_TAG}
-    container_name: homer-app
+    container_name: ${HEPLIFYUI_CONTAINER_NAME}
     depends_on:
       db:
         condition: service_healthy
