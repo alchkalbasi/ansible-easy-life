@@ -22,20 +22,14 @@ services:
     container_name: ${HEPLIFY_CONTAINER_NAME}
     command:
       - './heplify-server'
+      - '-config'
+      - '/app/heplify-server.toml'
+    volumes:
+      - ./heplify-server.toml:/app/heplify-server.toml
     ports:
       - "${PROM_SERVER_IP}:9060:9060/udp"
       - "${PROM_SERVER_IP}:9060:9060/tcp"
       - "${PROM_SERVER_IP}:9096:9096"
-    environment:
-      - "HEPLIFYSERVER_DBDRIVER=postgres"
-      - "HEPLIFYSERVER_DBADDR=db:5432"
-      - "HEPLIFYSERVER_DBUSER=${POSTGRES_USER}"
-      - "HEPLIFYSERVER_DBPASS=${POSTGRES_PASSWORD}"
-      - "HEPLIFYSERVER_DBDATA=${POSTGRES_DB}"
-      - "HEPLIFYSERVER_HEPADDR=0.0.0.0:9060"
-      - "HEPLIFYSERVER_PROMADDR=0.0.0.0:9096"
-      - "HEPLIFYSERVER_DBSHEMATEST=true"
-      - "HEPLIFYSERVER_LOGSTD=true"
     depends_on:
       db:
         condition: service_healthy

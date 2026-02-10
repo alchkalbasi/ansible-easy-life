@@ -52,6 +52,13 @@
   tags:
   - preparing
 
+- name: Template the heplify-server.toml file to path
+  ansible.builtin.template:
+    src: heplify-server.toml.j2
+    dest: "{{ service_dir }}/heplify-server.toml"
+  tags:
+  - preparing
+
 - name: Create docker external networks with name
   docker_network:
     name: "{{ item }}"

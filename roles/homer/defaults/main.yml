@@ -16,7 +16,6 @@ heplify_server_ip: !vault |
           36383032656535643733313235306263363465666133383739613739373533353831656264646661
           6463353032303630310a353139356437393735353138353638643335666231346134366638316231
           6337
-heplify_server_port: 9060
 
 # heplify server
 project_dir: /opt/services
@@ -54,3 +53,11 @@ heplify_container_name: heplify-server
 prom_server_ip: 172.16.154.20
 heplifyui_image_tag: 1.1.4
 
+loki_enabled: false
+AlegIDs_enabled: false
+logs_console: true
+log_level: info
+rotate_table_time: 5m
+promstats: true
+waitsessions: true
+prom_target_ip: true
