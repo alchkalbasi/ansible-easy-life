@@ -1,0 +1,34 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for postgres-slave
+
+# global
+project_dir: /opt/services
+service_dir: "{{ project_dir }}/postgres-master"
+docker_networks:
+  - prinet
+  - pubnet
+
+postgres_master_ip: 127.0.0.1
+postgres_replication_user: postgres
+postgres_replication_password: postgres
+
+# docker vars
+restart_policy: unless-stopped
+servr_ip: 127.0.0.1
+
+postgres_version: 16
+postgres_slave_hostname: postgres-slave
+postgres_slave_container_name: postgres-slave
+postgres_slave_password: postgres
+postgres_slave_user: postgres
+postgres_slave_port: 5432
+
+postgres_exporter_tag: v0.17.1
+postgres_exporter_hostname: postgres-exporter
+postgres_exporter_container_name: postgres-exporter
+postgres_exporter_user: exporter
+postgres_exporter_password: exporter
+extend_collectors: "database,table,functions,indexes,roles,locks,settings,activity,stat_user_tables,stat_user_indexes,statio_user_tables,statio_user_indexes"
+disable_collectors: "wal"
+postgres_exporter_port: 9187

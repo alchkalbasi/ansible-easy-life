@@ -1,0 +1,9 @@
+-- Create a dedicated replication user
+-- This runs only during the first volume initialization
+CREATE USER {{ replication_user | default('replicator') }} 
+WITH REPLICATION LOGIN PASSWORD '{{ replication_password }}';
+
+-- For Exporter
+CREATE USER {{ postgres_exporter_user }} WITH PASSWORD '{{ postgres_exporter_password }}';
+ALTER USER {{ postgres_exporter_user }} SET SEARCH_PATH TO postgres,pg_catalog;
+GRANT pg_monitor TO {{ postgres_exporter_user }};
