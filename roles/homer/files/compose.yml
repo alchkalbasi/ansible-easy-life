@@ -22,10 +22,19 @@ services:
     container_name: ${HEPLIFY_CONTAINER_NAME}
     command:
       - './heplify-server'
-      - '-config'
-      - '/app/heplify-server.toml'
-    volumes:
-      - ./heplify-server.toml:/app/heplify-server.toml
+    environment:
+      - "HEPLIFYSERVER_DBADDR=db:5432"
+      - "HEPLIFYSERVER_DBUSER=${POSTGRES_USER}"
+      - "HEPLIFYSERVER_DBPASS=${POSTGRES_PASSWORD}"
+      - "HEPLIFYSERVER_DBNAME=${POSTGRES_DB}"
+      - "HEPLIFYSERVER_DBDRIVER=postgres"
+      - "HEPLIFYSERVER_DBSHEMA=homer7"
+      - "HEPLIFYSERVER_DBDATATABLE=homer_data"
+      - "HEPLIFYSERVER_DBCONFTABLE=homer_config"
+      - "HEPLIFYSERVER_HEPADDR=0.0.0.0:9060"
+      - "HEPLIFYSERVER_LOGLVL=info"
+      - "HEPLIFYSERVER_LOGSTD=true"
+      - "HEPLIFYSERVER_DBDROPDAYS=7"
     ports:
       - "${PROM_SERVER_IP}:9060:9060/udp"
       - "${PROM_SERVER_IP}:9060:9060/tcp"

@@ -8,7 +8,6 @@ heplify_agent_download_path: /tmp
 heplify_agent_sha: sha256:6f8d87000558dc72091da4517c79f9bfd3f981ed75483a66d1a6f729393dbe9b
 heplify_agent_execute_path: /usr/local/bin/heplify
 systemd_path: /etc/systemd/system/heplify.service
-network_interface: any
 heplify_server_ip: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           34613266353866326130336532376435626332323134356463653839353461373364633134643330

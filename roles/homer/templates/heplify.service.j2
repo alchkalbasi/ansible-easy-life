@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart={{ heplify_agent_execute_path }} -i {{ network_interface }} -t udp -hs {{ heplify_server_ip }}:9060 -m SIPRTCP,SIPDNS
+ExecStart={{ heplify_agent_execute_path }} -e -hs {{ heplify_server_ip }}:9060 -m SIP -dd -zf -l info
 Restart=on-failure
 RestartSec=10s
 StandardOutput=syslog
