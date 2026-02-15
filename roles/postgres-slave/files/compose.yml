@@ -45,6 +45,3 @@ services:
     depends_on:
       postgres-slave:
         condition: service_healthy
-
-volumes:
-  postgres-exporter-data:

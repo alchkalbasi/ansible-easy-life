@@ -9,6 +9,9 @@ docker_networks:
   - prinet
   - pubnet
 
+postgres_replication_user: postgres
+postgres_replication_password: postgres
+
 # docker vars
 restart_policy: unless-stopped
 servr_ip: 127.0.0.1

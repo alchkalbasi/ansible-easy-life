@@ -130,7 +130,7 @@
 
 - name: Wait for Postgres-Slave container healthcheck to be healthy
   community.docker.docker_container_info:
-    name: "{{ docker_postgres__name }}"
+    name: "{{ postgres_slave_container_name }}"
   register: postgres_info
   until: >
     postgres_info.container.State.Health is defined and

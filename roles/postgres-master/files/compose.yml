@@ -44,11 +44,7 @@ services:
       - "${SERVER_IP}:${POSTGRES_EXPORTER_PORT}:9187"
     networks:
       - prinet
-    volumes:
-      - postgres-exporter-data
     depends_on:
       postgres-master:
         condition: service_healthy
 
-volumes:
-  postgres-exporter-data:
