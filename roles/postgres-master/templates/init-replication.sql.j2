@@ -1,9 +1,18 @@
 -- Create a dedicated replication user
--- Note: Using "IF NOT EXISTS" is safer if you ever re-run scripts
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '{{ postgres_replication_user }}') THEN
         CREATE USER {{ postgres_replication_user }} WITH REPLICATION LOGIN PASSWORD '{{ postgres_replication_password }}';
+    END IF;
+END
+$$;
+
+-- Create the Physical Replication Slot
+-- This ensures the Master starts holding WAL logs for the Slave immediately
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_replication_slots WHERE slot_name = 'slave_slot') THEN
+        PERFORM pg_create_physical_replication_slot('slave_slot');
     END IF;
 END
 $$;
