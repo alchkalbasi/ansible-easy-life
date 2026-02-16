@@ -16,12 +16,13 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_MASTER_PASSWORD}
       POSTGRES_DB: ${POSTGRES_MASTER_DB}
     ports:
-      - "${SERVER_IP}:${POSTGRES_MASTER_PORT}:5432"
+      - "${POSTGRES_MASTER_PORT}:5432"
     volumes:
       - ./pgdata:/var/lib/postgresql/data
       - ./postgresql.conf:/etc/postgresql/postgresql.conf:ro
       - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
       - ./init-db:/docker-entrypoint-initdb.d:ro
+      - ./wal_archive:/var/lib/postgresql/wal_archive
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]    
     networks:
       - prinet
@@ -41,7 +42,7 @@ services:
       EXTEND_COLLECTORS: "${EXTEND_COLLECTORS}"
       DISABLE_COLLECTORS: "${DESABLE_COLLECTORS}"
     ports:
-      - "${SERVER_IP}:${POSTGRES_EXPORTER_PORT}:9187"
+      - "${POSTGRES_EXPORTER_PORT}:9187"
     networks:
       - prinet
     depends_on:

@@ -1,38 +1,47 @@
-Role Name
-=========
+<p><img src="./postgresql-logo.svg" alt="postgres logo" title="postgres" align="right" height="60" /></p>
 
-A brief description of the role goes here.
+# PostgreSQL Master-Slave Replication: Master Role
 
-Requirements
-------------
+This Ansible role deploys a **PostgreSQL Master** instance optimized for Streaming Replication. It includes an integrated **Postgres Exporter** for Prometheus monitoring and automated initialization of replication identities.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+---
 
-Role Variables
---------------
+## Overview
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The role sets up a Primary database node designed to accept replication connections from a standby node.
 
-Dependencies
-------------
+* **Custom Configuration**: Uses specific `postgresql.conf`, `pg_hba.conf`, and `init-replication.sql` templates.
+* **Replication User**: Automatically creates a dedicated `postgresreplicationuser` during first boot.
+* **Healthchecks**: Built-in Docker healthchecks using `pg_isready`.
+* **Monitoring**: Sidecar container using `prometheuscommunity/postgres-exporter`.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+---
 
-Example Playbook
-----------------
+## Deployment
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+### Prerequisites
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+* **Docker CE** and **Docker Compose Plugin** installed on the target host.
+* The `community.docker` Ansible collection.
 
-License
--------
+### Variables
 
-BSD
+All variables in `defaults/main.yml` are **example variables**. You should define your actual environment variables in `host_vars`, `group_vars`, or your CI/CD secrets.
 
-Author Information
-------------------
+---
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## File Structure
+
+The role manages the following structure in `{{ service_dir }}`:
+* `pgdata/`: Physical database files.
+* `init-db/`: Initialization SQL scripts (run only on first boot).
+* `wal_archive/`: Directory for Write-Ahead Log archiving.
+* `postgresql.conf`: Main configuration (overrides internal defaults).
+* `pg_hba.conf`: Host-Based Authentication (the "Guest List").
+
+---
+
+## Maintainer
+
+**Name:** [Ali Kalbasi]  
+**Email:** ali99kalbasi82@gmail.com

@@ -1,9 +1,21 @@
 -- Create a dedicated replication user
--- This runs only during the first volume initialization
-CREATE USER {{ postgres_replication_user | default('replicator') }} 
-WITH REPLICATION LOGIN PASSWORD '{{ postgres_replication_password }}';
+-- Note: Using "IF NOT EXISTS" is safer if you ever re-run scripts
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '{{ postgres_replication_user }}') THEN
+        CREATE USER {{ postgres_replication_user }} WITH REPLICATION LOGIN PASSWORD '{{ postgres_replication_password }}';
+    END IF;
+END
+$$;
 
 -- For Exporter
-CREATE USER {{ postgres_exporter_user }} WITH PASSWORD '{{ postgres_exporter_password }}';
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '{{ postgres_exporter_user }}') THEN
+        CREATE USER {{ postgres_exporter_user }} WITH PASSWORD '{{ postgres_exporter_password }}';
+    END IF;
+END
+$$;
+
 ALTER USER {{ postgres_exporter_user }} SET SEARCH_PATH TO postgres,pg_catalog;
 GRANT pg_monitor TO {{ postgres_exporter_user }};

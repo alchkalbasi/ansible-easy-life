@@ -50,6 +50,16 @@
   tags:
     - preparing
 
+- name: Create WAL archive directory
+  ansible.builtin.file:
+    path: "{{ service_dir }}/wal_archive"
+    state: directory
+    owner: "999"
+    group: "999"
+    mode: '0700'
+  tags:
+    - preparing
+
 - name: Copy the compose file with owner and permissions
   ansible.builtin.copy:
     src: compose.yml
