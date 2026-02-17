@@ -44,3 +44,11 @@ max_replication_slots: 10
 enable_ssl: false
 enable_archive: true
 wal_archive_dir: /var/lib/postgresql/wal_archive
+max_worker_processes: 8
+max_parallel_workers_per_gather: 2
+max_parallel_workers: 4
+max_parallel_maintenance_workers: 2
+shared_buffers: 1024MB
+effective_cache_size: 3072MB
+work_mem: 32MB
+
