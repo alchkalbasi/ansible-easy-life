@@ -21,6 +21,7 @@ traefik_docker_expose_default: false
 traefik_http_redirect_to: web-secure
 traefik_cert_resolver_le_acme_tlschallenge: true
 traefik_certresolver: le
+traefik_cert_path: /certs/acme.json
 traefik_acme_email: ali99kalbasi82@gmail.com
 main_domain: main.com
 traefik_domain: "traefik.{{ main_domain }}"
