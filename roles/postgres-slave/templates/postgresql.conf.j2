@@ -62,13 +62,13 @@ log_min_duration_statement = 2000
 cluster_name = '{{ postgres_slave_hostname }}'
 
 
-# ---------- Matches your 4-core CPU ----------
+# ---------- Workers ----------
 max_worker_processes = {{ max_worker_processes }}
 max_parallel_workers_per_gather = {{ max_parallel_workers_per_gather }}
 max_parallel_workers = {{max_parallel_workers }}
 max_parallel_maintenance_workers = {{ max_parallel_maintenance_workers }} 
 
-# ---------- Memory (4GB Total) ----------
+# ---------- Memory ----------
 shared_buffers = {{ shared_buffers }}
 effective_cache_size = {{ effective_cache_size }}
 work_mem = {{ work_mem }}
