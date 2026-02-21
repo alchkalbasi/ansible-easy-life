@@ -1,7 +1,7 @@
-- hosts: all
+- hosts: rustfs-arvan
   gather_facts: true
   become: true
   roles:
-    - nginx-docker 
+    - rustFS
   tags:
-    - nginx
+    - rustfs
