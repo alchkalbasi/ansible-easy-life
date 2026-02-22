@@ -5,3 +5,11 @@
     - rustFS
   tags:
     - rustfs
+
+- hosts: elasticsearch-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - roles/elk/elasticsearch
+  tags:
+    - elasticsearch
