@@ -13,3 +13,11 @@
     - roles/elk/elasticsearch
   tags:
     - elasticsearch
+
+- hosts: logstash-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - roles/elk/logstash
+  tags:
+    - logstash

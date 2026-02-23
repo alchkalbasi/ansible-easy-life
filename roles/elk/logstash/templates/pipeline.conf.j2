@@ -1,0 +1,41 @@
+input {
+  # Port 5044 for Filebeat/Metricbeat
+  beats {
+    port => 5044
+    host => "0.0.0.0"
+  }
+
+  # Port 5000 for raw JSON logs
+  tcp {
+    port => 5000
+    codec => json
+  }
+}
+
+filter {
+  # Standard cleanup: Add a field to track when Logstash processed the event
+  mutate {
+    add_field => { "[@metadata][processed_at]" => "%{@timestamp}" }
+  }
+
+  # If you are sending specialized logs, you can add Grok patterns here later
+}
+
+output {
+  elasticsearch {
+    # Using the variables from your 'environment' block in compose
+    hosts => ["${ELASTIC_HOSTS}"]
+    user => "${ELASTIC_USER}"
+    password => "${ELASTIC_PASS}"
+    
+    # Creates daily indices like logs-2026.02.23
+    index => "logs-%{+YYYY.MM.dd}"
+    
+    # Security settings for Traefik setup
+    ssl => true
+    ssl_certificate_verification => false
+  }
+
+  # Optional: Keep this for debugging; it prints logs to 'docker logs logstash'
+  # stdout { codec => rubydebug }
+}
