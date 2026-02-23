@@ -41,7 +41,7 @@
 - name: Elasticsearch Configuration
   include_tasks: configure.yml
   tags:
-    - configure
+    - econfigure
 
 - name: Elasticsearch Deploy
   include_tasks: deploy.yml
