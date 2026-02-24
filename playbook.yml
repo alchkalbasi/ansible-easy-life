@@ -37,3 +37,11 @@
     - roles/elk/fleet
   tags:
     - fleet
+
+- hosts: agent-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - roles/elk/agent
+  tags:
+    - agent
