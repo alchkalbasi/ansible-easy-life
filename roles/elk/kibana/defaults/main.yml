@@ -10,7 +10,7 @@ docker_networks:
   - pubnet
 
 # .env vars
-kibana_image_tag: 9
+kibana_image_tag: 8.19.11
 kibana_container_name: kibana
 RESTART_POLICY: unless-stopped
 kibana_server_name: kibana

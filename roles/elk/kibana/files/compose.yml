@@ -8,7 +8,7 @@ networks:
 
 services:
   kibana:
-    image: dhi.io/kibana:${KIBANA_IMAGE_TAG}
+    image: elastic/kibana:${KIBANA_IMAGE_TAG}
     container_name: ${KIBANA_CONTAINER_NAME}
     restart: ${RESTART_POLICY}
     environment:
