@@ -21,3 +21,11 @@
     - roles/elk/logstash
   tags:
     - logstash
+
+- hosts: kibana-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - roles/elk/kibana
+  tags:
+    - kibana
