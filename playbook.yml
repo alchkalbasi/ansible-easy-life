@@ -29,3 +29,11 @@
     - roles/elk/kibana
   tags:
     - kibana
+
+- hosts: fleet-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - roles/elk/fleet
+  tags:
+    - fleet
