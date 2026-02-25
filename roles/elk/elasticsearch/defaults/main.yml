@@ -13,7 +13,7 @@ docker_networks:
 elastic_image_tag: 8
 elastic_container_name: elasticsearch
 restart_policy: unless-stopped
-elastic_password: test
+elastic_password: PxOe82aHqPtujNVoqAdOgF9UH2yziY5c
 minimum_heap_size: 1g
 maximum_heap_size: 1g
 bootstrap_memory_lock: true
@@ -31,5 +31,5 @@ elastic_xpack_license_self_generated_type: basic
 elastic_cluster_routing_allocation_disk_threshold_enabled: true
 elastic_cluster_routing_allocation_disk_watermark_low: 80%
 elastic_cluster_routing_allocation_disk_watermark_high: 90%
-elastic_sub_domain: e
-main_domain: elk.com
+elastic_sub_domain: elastic
+main_domain: elk.hyperlikes.ir

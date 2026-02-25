@@ -47,11 +47,11 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=pubnet
-      - traefik.http.routers.elasticsearch.entrypoints=http
+      - traefik.http.routers.elasticsearch.entrypoints=web
       - traefik.http.routers.elasticsearch.rule=Host(`${ELASTIC_SUB_DOMAIN}.${MAIN_DOMAIN}`)
       - traefik.http.routers.elasticsearch.middlewares=https-redirect
       - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
-      - traefik.http.routers.elasticsearch-secure.entrypoints=https
+      - traefik.http.routers.elasticsearch-secure.entrypoints=web-secure
       - traefik.http.routers.elasticsearch-secure.rule=Host(`${ELASTIC_SUB_DOMAIN}.${MAIN_DOMAIN}`)
       - traefik.http.routers.elasticsearch-secure.tls=true
       - traefik.http.routers.elasticsearch-secure.tls.certresolver=le

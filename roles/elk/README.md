@@ -70,3 +70,15 @@ Full tutorial available [here](https://garutilorenzo.github.io/ansible-collectio
 
 * Add cleanup step
 * Add upgrade step
+
+
+########################
+create user for kibana:
+
+docker exec -it elasticsearch bin/elasticsearch-reset-password -u kibana_system --auto
+
+
+
+fleet needs superuser access
+so it use user pass elastic
+

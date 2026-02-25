@@ -1,8 +1,10 @@
 networks:
-  ${NETWORK1}:
+  prinet:
     external: true
-  ${NETWORK2}:
+    name: ${PRIVATE_NETWORK}
+  pubnet:
     external: true
+    name: ${PUBLIC_NETWORK}
 
 volumes:
   traefik-data:
@@ -26,9 +28,9 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.to=${TRAEFIK_HTTP_REDIRECT_TO}"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.${TRAEFIK_HTTP_REDIRECT_TO}.address=:443"
-      - "--certificatesresolvers.${traefik_certresolver}.acme.tlschallenge=${TRAEFIK_CERT_RESOLVER_LE_ACME_TLSCHALLENGE}"
-      - "--certificatesresolvers.${traefik_certresolver}.acme.email=${TRAEFIK_ACME_EMAIL}"
-      - "--certificatesresolvers.${traefik_certresolver}.acme.storage=${TRAEFIK_CERT_PATH}"
+      - "--certificatesresolvers.${TRAEFIK_CERTRESOLVER}.acme.tlschallenge=${TRAEFIK_CERT_RESOLVER_LE_ACME_TLSCHALLENGE}"
+      - "--certificatesresolvers.${TRAEFIK_CERTRESOLVER}.acme.email=${TRAEFIK_ACME_EMAIL}"
+      - "--certificatesresolvers.${TRAEFIK_CERTRESOLVER}.acme.storage=${TRAEFIK_CERT_PATH}"
     ports:
       - "80:80"
       - "443:443"

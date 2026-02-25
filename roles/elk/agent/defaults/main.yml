@@ -4,7 +4,7 @@
 
 # global
 project_dir: /opt/services/elk
-service_dir: "{{ project_dir }}/kibana"
+service_dir: "{{ project_dir }}/agent"
 docker_networks:
   - prinet
   - pubnet
@@ -13,6 +13,7 @@ docker_networks:
 agent_image_tag: 8.19.11
 restart_policy: unless-stopped
 agent_container_name: elastic-agent
-fleet_subdomain: a
+fleet_subdomain: fleet
 main_domain: elk.com
-enrollment_token: token
+enrollment_token: a2hOYmxKd0JVS3lYNVNsZU9rTVI6cjRYdjdQTXFwMkhRcEtmZm9WOHJOZw==
+fleet_url: "https://fleet.elk.hyperlikes.ir"

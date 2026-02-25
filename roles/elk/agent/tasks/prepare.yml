@@ -16,10 +16,8 @@
 
 - name: Create agent data directory 
   ansible.builtin.file:
-    path: "{{ service_dir }}/kdata"
+    path: "{{ service_dir }}/adata"
     state: directory
-    owner: '65532'
-    group: '65532'
     mode: '0755'
     recurse: yes
   tags:

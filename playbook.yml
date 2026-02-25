@@ -45,3 +45,11 @@
     - roles/elk/agent
   tags:
     - agent
+
+- hosts: traefik-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - roles/traefik
+  tags:
+    - traefik

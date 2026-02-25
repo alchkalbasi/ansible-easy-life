@@ -14,11 +14,10 @@ services:
     volumes:
       - ./pipeline:/usr/share/logstash/pipeline:ro
       - ./ldata:/usr/share/logstash/data
-    ports:
-      - "127.0.0.1:5044:5044"
-      - "127.0.0.1:9600:9600"
     environment:
-      LS_JAVA_OPTS: "-Xmx${MINIMUM_HEAP_SIZE} -Xms${MINIMUM_HEAP_SIZE}"
+      LS_JAVA_OPTS: "-Xmx${MINIMUM_HEAP_SIZE} -Xms${MAXIMUM_HEAP_SIZE}"
+      LC_ALL: "en_US.UTF-8"
+      LANG: "en_US.UTF-8"
       NODE_NAME: ${LOGSTASH_NODE_NAME}
       HTTP_HOST: ${LOGSTASH_HTTP_HOST}
       PIPELINE_WORKERS: ${LOGSTASH_PIPELINE_WORKERS}
@@ -37,11 +36,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=pubnet"
-      - "traefik.tcp.routers.logstash-beats.rule=Host(`${LOGSTASH_SUBDOMAIN}.${MAIN_DOMAIN}`)"
+      # --- TCP ROUTER FOR BEATS ---
       - "traefik.tcp.routers.logstash-beats.entrypoints=beats"
+      # If not using TLS inside Logstash, use HostSNI(*)
+      - "traefik.tcp.routers.logstash-beats.rule=HostSNI(`*`)"
       - "traefik.tcp.services.logstash-beats.loadbalancer.server.port=5044"
+      # --- HTTP ROUTER FOR API ---
       - "traefik.http.routers.logstash-api.rule=Host(`${LOGSTASH_SUBDOMAIN}.${MAIN_DOMAIN}`)"
-      - "traefik.http.routers.logstash-api.entrypoints=https"
+      - "traefik.http.routers.logstash-api.entrypoints=web-secure"
       - "traefik.http.routers.logstash-api.tls=true"
       - "traefik.http.routers.logstash-api.tls.certresolver=le"
       - "traefik.http.services.logstash-api.loadbalancer.server.port=9600"

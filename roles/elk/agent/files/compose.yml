@@ -14,7 +14,7 @@ services:
     user: root 
     environment:
       - FLEET_ENROLL=1
-      - FLEET_URL=https://${FLEET_SUBDOMAIN}.${MAIN_DOMAIN}
+      - FLEET_URL=${FLEET_URL}
       - FLEET_ENROLLMENT_TOKEN=${ENROLLMENT_TOKEN}
       # If your Traefik certs are self-signed or have chain issues, 
       # uncomment the line below for testing:
@@ -28,5 +28,7 @@ services:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /:/hostfs:ro
+      - /var/log/journal:/var/log/journal:ro
+      - /run/systemd/journal:/run/systemd/journal:ro
     networks:
       - prinet

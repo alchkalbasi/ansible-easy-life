@@ -8,7 +8,7 @@ service_dir: "{{ project_dir }}/traefik"
 docker_networks:
   - prinet
   - pubnet
-traefik_docker_image: dhi.io/traefik:3
+traefik_docker_image: traefik:v3.6.9
 traefik_restart_policy: unless-stopped
 traefik_hostname: traefik
 traefik_container_name: traefik
@@ -23,7 +23,7 @@ traefik_cert_resolver_le_acme_tlschallenge: true
 traefik_certresolver: le
 traefik_cert_path: /certs/acme.json
 traefik_acme_email: ali99kalbasi82@gmail.com
-main_domain: main.com
+main_domain: elk.hyperlikes.ir
 traefik_domain: "traefik.{{ main_domain }}"
 traefik_tls: true
 traefik_loadbalancer_port: 8080
