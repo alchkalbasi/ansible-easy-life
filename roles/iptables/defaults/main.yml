@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for iptables
+
+iptable_rules_path: /etc/iptables
+author: alch
+ssh_port: 22
