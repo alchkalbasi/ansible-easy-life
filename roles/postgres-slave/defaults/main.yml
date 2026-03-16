@@ -23,6 +23,8 @@ postgres_slave_password: postgres
 postgres_slave_user: postgres
 postgres_slave_port: 5432
 postgres_master_port: 5432
+postgres_slave_resource_cpus: 3.5
+postgres_slave_resource_memory: 3.8G
 
 postgres_exporter_tag: v0.17.1
 postgres_exporter_hostname: postgres-exporter
