@@ -5,3 +5,21 @@
     - rustFS
   tags:
     - rustfs
+
+- hosts: influxdb-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - observability/influxDB
+  tags:
+    - influxdb
+    - observability
+
+- hosts: telegraf-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - observability/telegraf-docker
+  tags:
+    - telegraf-docker
+    - observability
