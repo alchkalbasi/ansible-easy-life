@@ -1,0 +1,13 @@
+# Gitlab Repo TODO List
+
+- [x] gitlab components readme
+- [ ] images
+    - [ ] gitlab-components
+    - [ ] gitlab-omnibus
+    - [ ] gitlab-backup
+    - [ ] gitlab-runner
+- [x] gitlab-omnibus role
+- [x] gitlab-omnibus readme
+- [x] gitlab-runner role
+- [x] gitlab-runner readme
+- [ ] restore backup script
