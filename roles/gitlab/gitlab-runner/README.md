@@ -63,3 +63,33 @@ gitlab-runner register \
 ```
 
 *If a runner is already registered, the configuration is saved, and you do not need to register it again.*
+
+### Runner Types
+
+Runners, depending on their scope and access level, runners can be configured in different ways.
+
+#### Shared Runner
+Shared runners are available to **all projects within a GitLab instance**.
+
+- Managed by GitLab administrators.
+- Useful for general workloads across many projects.
+- Jobs from multiple repositories may run on the same runner.
+- Often used in GitLab SaaS environments.
+
+#### Group Runner
+Group runners are available to **all projects within a specific GitLab group**.
+
+- Managed at the group level.
+- Shared only among projects inside that group.
+- Useful for teams that want dedicated runners for their workloads (for example, a DevOps or platform team).
+- Provides better resource control compared to shared runners.
+
+#### Project (Specific) Runner
+Project runners are dedicated to **a single project**.
+
+- Registered and used only by that repository.
+- Provides maximum isolation and control.
+- Ideal for projects with special requirements such as:
+  - custom build environments
+  - access to private infrastructure
+  - sensitive deployment credentials

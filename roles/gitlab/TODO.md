@@ -11,3 +11,6 @@
 - [x] gitlab-runner role
 - [x] gitlab-runner readme
 - [ ] restore backup script
+- [x] gitlab pipeline doc
+- [x] gitlab monitoring doc
+- [ ] gitlab branch strategy doc
