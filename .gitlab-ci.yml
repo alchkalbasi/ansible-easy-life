@@ -1,0 +1,11 @@
+stages:
+  - build
+
+build-runner-images:
+  stage: build
+  rules:
+    - changes:
+        - roles/gitlab/runner-images/**/*
+  trigger:
+    include: roles/gitlab/runner-images/.gitlab-ci.yml
+    strategy: depend
