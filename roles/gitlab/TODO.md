@@ -13,4 +13,5 @@
 - [ ] restore backup script
 - [x] gitlab pipeline doc
 - [x] gitlab monitoring doc
-- [ ] gitlab branch strategy doc
+- [x] gitlab branch strategy doc
+- [x] runner images repo
