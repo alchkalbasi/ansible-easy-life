@@ -8,4 +8,4 @@ build-runner-images:
         - roles/gitlab/runner-images/**/*
   trigger:
     include: roles/gitlab/runner-images/.gitlab-ci.yml
-    strategy: depends
+    strategy: depend
