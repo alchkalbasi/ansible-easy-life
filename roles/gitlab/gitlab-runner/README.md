@@ -55,7 +55,7 @@ This role handles the connection to GitLab automatically via a `docker exec` com
 ```bash
 gitlab-runner register \
   --non-interactive \
-  --url "https://git.mecan.ir/" \
+  --url "https://url.com" \
   --token "$RUNNER_TOKEN" \
   --executor "docker" \
   --docker-image "alpine:latest" \
