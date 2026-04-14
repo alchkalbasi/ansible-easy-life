@@ -23,3 +23,21 @@
   tags:
     - telegraf-docker
     - observability
+
+- hosts: gitlab-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - gitlab/gitlab-omnibus
+  tags:
+    - gitlab
+    - omnibus
+
+- hosts: runner-arvan
+  gather_facts: true
+  become: true
+  roles:
+    - gitlab/gitlab-runner
+  tags:
+    - gitlab
+    - runner
