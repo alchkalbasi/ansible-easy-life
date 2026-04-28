@@ -1,56 +1,76 @@
 ---
-- name: Create Jitsi directory
-  file:
-    path: "{{ jitsi_dir }}"
+# tasks file for Jitsi
+
+- name: Check if Docker CE and Compose Plugin are installed
+  ansible.builtin.command: "{{ item }}"
+  register: docker_install_check
+  ignore_errors: true
+  changed_when: false
+  loop:
+    - "docker --version"
+    - "docker compose version"
+  tags:
+    - check-docker
+
+- name: Fail if Docker CE is missing
+  ansible.builtin.fail:
+    msg: "CRITICAL: Docker (docker-ce) is not installed on this host. Please install it before running this playbook."
+  when: docker_install_check.results[0].rc != 0
+  tags:
+    - check-docker
+
+- name: Fail if Docker Compose is missing
+  ansible.builtin.fail:
+    msg: "CRITICAL: Docker Compose Plugin is missing. Run 'sudo apt install docker-compose-plugin' to fix."
+  when: docker_install_check.results[1].rc != 0
+  tags:
+    - check-docker
+
+- name: Success message of docker-check task
+  ansible.builtin.debug:
+    msg: "Environment check passed. Docker and Compose are ready!"
+  tags:
+    - check-docker
+
+- name: Creates jitsi service directory
+  ansible.builtin.file:
+    path: "{{ service_dir }}"
     state: directory
-    mode: '0755'
-    recurse: yes
   tags:
-  - jitsi
-  - jitsi-dir
+    - preparing
 
-- name: Create Jitsi docker directory
-  file:
-    path: "{{ jitsi_docker_dir }}"
-    state: directory
-    mode: '0755'
-    recurse: yes
+- name: Copy the compose file with owner and permissions
+  ansible.builtin.copy:
+    src: compose.yml
+    dest: "{{ service_dir }}/compose.yml"
   tags:
-  - jitsi
-  - jitsi-docker-dir
+  - preparing
 
-- name: Copy Compose file
-  copy:
-    src: "{{ compose_name }}"
-    dest: "{{ jitsi_docker_dir }}"
-    mode: '0640'
+- name: Template the .env file to path
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ service_dir }}/.env"
   tags:
-  - jitsi
-  - copy-compose
+  - preparing
 
-- name: Copy .env file
-  copy:
-    src: .env
-    dest: "{{ jitsi_docker_dir }}"
-    mode: '0640'
+- name: Create docker external networks with name
+  docker_network:
+    name: "{{ item }}"
+    driver_options:
+      com.docker.network.bridge.name: "{{ item }}"
+  loop: "{{ docker_networks }}"
   tags:
-  - jitsi
-  - copy-env
-  
-- name: Pull jitsi Docker images
+    - docker-networks
+
+- name: Pull Jitsi image for project
+  community.docker.docker_compose_v2_pull:
+    project_src: "{{ service_dir }}"
+    policy: missing #pull if only the images doesn't exist locally
+  tags:
+    - pull
+
+- name: Deploy Jitsi Docker Compose
   community.docker.docker_compose_v2:
-    project_src: "{{ jitsi_docker_dir }}"
-    pull: always
+    project_src: "{{ service_dir }}"
   tags:
-  - jitsi
-  - pull-jitsi-images
-
-- name: Start jitsi with Docker Compose
-  community.docker.docker_compose_v2:
-    project_name: jitsi
-    project_src: "{{ jitsi_docker_dir }}"
-    state: present  
-    remove_orphans: true
-  tags:
-  - jitsi
-  - run-jitsi-container
+    - deploy
