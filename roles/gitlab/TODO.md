@@ -15,3 +15,8 @@
 - [x] gitlab monitoring doc
 - [x] gitlab branch strategy doc
 - [x] runner images repo
+- [ ] observability
+    - [ ] gitlab exporters
+    - [ ] gitlab dashboards
+    - [ ] gitlab pipeline exporter
+    - [ ] runner exporter
