@@ -15,5 +15,5 @@ restart_policy: unless-stopped
 agent_container_name: elastic-agent
 fleet_subdomain: fleet
 main_domain: elk.com
-enrollment_token: a2hOYmxKd0JVS3lYNVNsZU9rTVI6cjRYdjdQTXFwMkhRcEtmZm9WOHJOZw==
-fleet_url: "https://fleet.elk.hyperlikes.ir"
+enrollment_token: 1234
+fleet_url: "https://fleet.elk.com"
