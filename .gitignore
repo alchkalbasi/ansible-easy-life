@@ -1,1 +1,4 @@
 inventories/
+.vscode/
+./roles/setup/system-setup/files/apps/*
+./roles/confluence/tasks/confluence-activate.yml

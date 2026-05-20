@@ -49,3 +49,11 @@
     - jitsi
   tags:
     - jitsi
+  
+- hosts: Deploy Confluence 
+  gather_facts: true
+  become: true
+  roles:
+    - confluence
+  tags:
+    - confluence

@@ -1,0 +1,81 @@
+
+name: "Attlasian Mizban - Jira "
+services:
+  jira:
+    image: atlassian/jira-software:${image_tag}
+    restart: ${RESTART_POLICY}
+    container_name: ${HOSTNAME_JIRA}
+    hostname: ${HOSTNAME_JIRA}
+    environment:      
+      ATL_DB_DRIVER: 'org.postgresql.Driver'
+      ATL_DB_TYPE: 'postgres72'
+      ATL_JDBC_URL: 'jdbc:postgresql://db-jira:5432/jira'
+      ATL_JDBC_USER: '${JIRA_DB_USER}'
+      ATL_JDBC_PASSWORD: '${JIRA_DB_PASSWORD}'
+      ATL_TOMCAT_SCHEME: https
+      ATL_TOMCAT_SECURE: 'true'
+      ATL_PROXY_PORT: 443
+      ATL_PROXY_NAME: '${SUBDOMAIN}.${DOMAIN}'
+      JAVA_OPTS: '-javaagent:/opt/atlassian-agent.jar'
+      JVM_MINIMUM_MEMORY: 2048m
+      JVM_MAXIMUM_MEMORY: 3500m
+
+    volumes:
+      - jira-vol:/var/atlassian/application-data/jira
+      - ./agent/atlassian-agent.bak:/opt/atlassian-agent.jar:ro
+
+    networks:
+      app-network:
+      web-network:
+
+    depends_on:
+      - postgressql-jira
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jira.rule=Host(`${SUBDOMAIN}.${DOMAIN}`)"
+      - "traefik.http.routers.jira.service=${HOSTNAME_JIRA}"
+      - "traefik.http.routers.jira.entrypoints=web-secure"
+      - "traefik.http.services.jira.loadbalancer.server.port=8080"
+      - "traefik.http.routers.jira.tls=true"
+      - "traefik.http.routers.jira.tls.certresolver=le"
+      - "traefik.http.services.jira.loadbalancer.passhostheader=true"
+      - "traefik.http.routers.jira.middlewares=compresstraefik"
+      - "traefik.http.middlewares.compresstraefik.compress=true"
+      - "traefik.docker.network=web-network"
+
+
+  postgressql-jira:
+    image: postgres
+    restart: ${RESTART_POLICY}
+    container_name: ${HOSTNAME_POSTGRES}
+    hostname: ${HOSTNAME_POSTGRES}
+    environment:
+      POSTGRES_USER: ${JIRA_DB_USER}
+      POSTGRES_PASSWORD: '${JIRA_DB_PASSWORD}'
+    volumes:
+      - postgresql-data-jira:/var/lib/postgresql/data
+    networks:
+      app-network:
+        aliases:
+          - db-jira
+
+networks:
+  app-network:
+    external: true
+  web-network:
+    external: true
+    
+volumes:
+  postgresql-data-jira:
+    name: postgresql-data-jira
+  jira-vol:
+    name: jira-vol
+
