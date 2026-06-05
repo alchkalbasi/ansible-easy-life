@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/MHSanaei/3x-ui/raw/main/media/3x-ui-dark.png" alt="3xui-logo"/>
+</p>
+
 # 3x-ui Deployment Stack
 
 This is an **Ansible role** paired with a **Docker Compose** stack to automate the deployment and provisioning of the `3x-ui` panel.
