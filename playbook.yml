@@ -50,10 +50,19 @@
   tags:
     - jitsi
   
-- hosts: Deploy Confluence 
+- hosts: confluence-server 
   gather_facts: true
   become: true
   roles:
     - confluence
   tags:
     - confluence
+
+- name: Setup System Role
+  hosts: alch-hp
+  gather_facts: true
+  become: true
+  roles:
+    - setup/system-setup
+  tags:
+    - system-setup
