@@ -3,7 +3,9 @@ inventories/
 ./roles/confluence/tasks/confluence-activate.yml
 
 # system setup role
-./roles/setup/system-setup/files/apps/*
 ./roles/setup/system-setup/templates/custom.sources.j2
 ./roles/setup/system-setup/files/ssh_config
 ./roles/setup/system-setup/files/authorized_keys
+
+# docker role
+./roles/docker/files/config.json

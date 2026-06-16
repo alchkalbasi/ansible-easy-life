@@ -91,12 +91,12 @@ setup_tools_terminal_packages:
   - zsh-syntax-highlighting
 
 # appinstall.yml vars
-setup_apps_install_snap: false
-setup_apps_install_custom: false
+setup_apps_install_snap: true
+setup_apps_install_custom: true
 setup_apps_install_oh_my_zsh: true
 setup_apps_install_zsh_plugins: true
 setup_apps_install_vim_plugins: true
-setup_apps_install_chrome: true
+setup_apps_install_chrome: true 
 setup_apps_install_nekoray: true
 setup_apps_install_winbox: true
 setup_apps_oh_my_zsh_url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -111,7 +111,7 @@ setup_apps_custom_snap:
   - name: code
     classic: true
   - name: drawio
-  - name: mattermost-desktop
+  # - name: mattermost-desktop
   # - name: pycharm
   #   classic: true
 setup_apps_url_chrome: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb

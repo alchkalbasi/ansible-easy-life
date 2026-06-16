@@ -21,7 +21,7 @@
     name:
       - apt-transport-https
       - ca-certificates
-      - software-properties-common
+      # - software-properties-common
       - gnupg
       - curl
     state: present
