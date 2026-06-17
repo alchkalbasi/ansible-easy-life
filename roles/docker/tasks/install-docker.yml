@@ -19,7 +19,7 @@
       - docker-compose-plugin
     state: "{{ docker_package_state | default('present') }}"
   become: true
-  notify: Restart docker service
+  notify: Restart docker
   tags:
     - docker
     - docker-install

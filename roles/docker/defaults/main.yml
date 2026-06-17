@@ -45,15 +45,16 @@ docker_custom_hub_url: !vault |
           6361383035363032303538663239663732633664336334373363
 
 docker_daemon_config:
-  log-driver: "json-file"
+  log-driver: json-file
   log-opts:
     max-size: "100m"
-    max-file: "10"
-    compress: "true"
-  exec-opts:
-    - "native.cgroupdriver=systemd"
-  registry-mirrors:
-    - "{{ docker_custom_hub_url }}"
+    max-file: "3"
+  registry-mirrors: >-
+    {{
+      [docker_custom_hub_url]
+      if docker_custom_hub_url is defined
+      else []
+    }}
 
 docker_xray_enable: true
 
